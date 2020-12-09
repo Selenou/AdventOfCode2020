@@ -88,7 +88,6 @@ int main(int argc, char* argv[])
 	int argument;
 
 	std::ifstream inputFile("../Day8/input.txt");
-	std::string line;
 
 	while (inputFile >> operation >> sign >> argument)
 	{

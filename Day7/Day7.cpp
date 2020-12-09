@@ -39,7 +39,7 @@ int GetBagsNbInsideTarget(std::unordered_map<std::string, std::vector<std::strin
 {
 	int res = size;
 
-	for (auto bag : bagTable[key])
+	for (auto& bag : bagTable[key])
 	{
 		auto& bagStr = bag;
 		res += size * GetBagsNbInsideTarget(bagTable, bagStr.substr(2, bagStr.size() - 1), std::stoi(bagStr.substr(0,1)));
