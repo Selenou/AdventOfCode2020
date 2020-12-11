@@ -102,14 +102,13 @@ bool FirstRule(int row, int col, const std::vector<std::vector<SeatStatus>>& lay
 
 	int adjacent = 0;
 
-	for (int i = row - 1; i <= row + 1; i++) 
+	for (int i : {row-1, row, row+1})
 	{
-		for (int j = col - 1; j <= col + 1; j++) 
+		for (int j : {col-1, col, col+1})
 		{
-			// I could have fill my vector with floor as trim to avoid some checks
-			if ((i != -1 && j != -1) &&
-				(i < layout.size() && j < layout[i].size()) &&
-				(i != row || j != col) && 
+			if ((i != -1 && j != -1) && //not too low
+				(i < layout.size() && j < layout[i].size()) && // not too big
+				(i != row || j != col) && // not self
 				layout[i][j] == SeatStatus::Occupied)
 			{
 				adjacent++;
@@ -126,7 +125,7 @@ bool FirstRule(int row, int col, const std::vector<std::vector<SeatStatus>>& lay
 	return false;
 }
 
-bool FoundOccupiedSeat(int row, int col, int rowOffset, int colOffset, const std::vector<std::vector<SeatStatus>>& layout)
+bool FindOccupiedSeat(int row, int col, int rowOffset, int colOffset, const std::vector<std::vector<SeatStatus>>& layout)
 {
 	if ((row <= 0 && rowOffset < 0) || (row >= layout.size()-1 && rowOffset > 0))
 		return false;
@@ -164,7 +163,7 @@ bool SecondRule(int row, int col, const std::vector<std::vector<SeatStatus>>& la
 		{
 			if (i == 0 && j == 0) 
 				continue;
-			if(FoundOccupiedSeat(row, col, i, j, layout))
+			if(FindOccupiedSeat(row, col, i, j, layout))
 				adjacent++;
 		}
 	}
